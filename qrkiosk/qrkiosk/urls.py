@@ -18,9 +18,14 @@ from django.urls import path
 from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
+from board_app.views import BoardView, PostView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('kiosk.urls'))
+    path('', include('kiosk.urls')),
+    path('board/', BoardView.as_view(), name='board'),
+    path('post/', PostView.as_view(), name='post'),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

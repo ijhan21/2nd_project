@@ -7,7 +7,7 @@ import datetime
 from django.db.models import Q
 # Create your views here.
 def store(request):
-    company =Company.objects.get(id=1) # 'QR목동'점 id
+    company =Company.objects.get(id=1) # '목동점 id
     # print("company : ",company)
     table =Table.objects.get(id=1)
     products= Product.objects.filter(company=company)
@@ -15,6 +15,16 @@ def store(request):
     cartItems = order.get_cart_items
     context={'products':products, 'cartItems':cartItems, 'table':table, 'company':company}
     return render(request, 'store/store.html', context)
+
+# def store(request):
+#     company =Company.objects.get(id=10) # '호텔 id
+#     # print("company : ",company)
+#     table =Table.objects.get(id=1)
+#     products= Product.objects.filter(company=company)
+#     order,created= Order.objects.get_or_create(table=table, order_complete=False)
+#     cartItems = order.get_cart_items
+#     context={'products':products, 'cartItems':cartItems, 'table':table, 'company':company}
+#     return render(request, 'store/store.html', context)
 
 def cart(request, table=2):
     # company =Company.objects.get(id=1) 
@@ -72,3 +82,28 @@ def orderComplete(request, table):
         order.save()
         print("orders:",ord)
     return HttpResponseRedirect('/')
+
+
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from board_app.models import Board
+from django.urls import reverse
+
+def boardDo(request):
+        print("********************************************")
+        boards = {'boards': Board.objects.all()}
+        print("******---------------------------------**")
+        return render(request, 'store/list.html', boards)
+
+
+def postDo(request):
+    if request.method == "POST":
+        author = request.POST['author']
+        title = request.POST['title']
+        content = request.POST['content']
+        board = Board(author=author, title=title, content=content)
+        board.save()
+        return HttpResponseRedirect(reverse('index'))
+
+    else:
+        return render(request, 'store/post.html')

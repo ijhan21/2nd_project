@@ -32,11 +32,7 @@ def search(request):
     context={'products':products, 'cartItems':cartItems, 'table':table, 'company':company}
     return render(request, 'store/store.html', context)
 
-<<<<<<< HEAD
-def cart(request, table=2):
-=======
 def cart(request, table):
->>>>>>> companytable
     # company =Company.objects.get(id=1) 
     table =Table.objects.get(id=table)
     order,created= Order.objects.get_or_create(table=table, order_complete=False)
@@ -122,7 +118,6 @@ def manage(request):
 ###############################################################################################
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from board_app.models import Board
 from django.urls import reverse
 
 def boardDo(request):

@@ -25,7 +25,7 @@ h1,h2,h3,h4,h5,h6{
 	font-size: 25pt;
 	text-align: center;
 	margin-inline: 10px;
-	
+
 
 }
 
@@ -119,3 +119,117 @@ a.nav-link {
 .hidden{
 	display: none!important;
 }
+
+
+/* ---------고객게시판 css--------- */
+
+thead {
+	background-color:#cecece;
+}
+
+.content {
+	max-width:1000px;
+	margin: auto;
+	padding:10px;
+}
+
+.header {
+	text-align: center;
+	font-size: 25pt;
+}
+
+.board {
+	width: 100%
+}
+
+.even_bgcolor {
+	background-color:#e8efff;
+}
+
+.pagination {
+	display: flex;           
+}
+
+.current {
+	font-weight: bold;
+}
+
+a {
+	text-decoration: none;
+	text-align: center;
+	font-size: 25pt;
+	font-weight: bold;
+}
+
+.abutton {
+	background-color: #e6e6ff;
+	color: #7b7b7b;
+	font-size: 25pt;
+	margin-bottom: 200px;
+	
+}
+
+td {
+    display: table-cell;
+    vertical-align: inherit;
+	font-size: 25pt;
+	color: #000000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: hsl(0, 0%, 30%);
+	font-size: 30pt;
+	font-weight: bold;
+}
+
+div {
+    display: block;
+}
+
+.reply_content {
+	text-align:right	
+}
+
+.reply_content .reply{
+	border-radius: 0.5em;
+	display: block;
+	margin: 4px;
+	padding: 3px 10px;
+}
+
+.board_for_read {
+	width: 100%;
+	background-color:#f1f1f1;
+}
+
+#title {
+	height: 60px;
+	width: 100%;
+	border-radius: 0.5em;
+	border: 1px;
+	font-family: inherit;
+	font-size: 25pt;
+	background-color: #ffffff;
+}
+
+textarea {
+	width: 100%;
+	font-family: inherit;
+	font-size: 100%;
+	resize: none;
+	border-radius: 0.5em;
+	padding-block: 10px;
+	border: 1px;
+	font-size: 25pt;
+	background-color: #ffffff;
+}
+
+.td_title {
+	background-color: #d8d8d8
+}
+
+.board_for_read {
+	width: 100%;
+	background-color:#f1f1f1;
+}
+

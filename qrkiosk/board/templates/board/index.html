@@ -100,11 +100,11 @@
             
 
             <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'board:index' %}" class="btn btn-warning">문의</a>
+                <a href="{% url 'store' %}" class="btn btn-warning">Home</a>
 
                 <a href="#"> {{table}},
-                    <img id="cart-icon" width=30px src="{% static 'images/cart.png' %}"></a>
-                <p id="cart-total">{{cartItems}}</p>
+                    <!-- <img id="cart-icon" width=30px src="{% static 'images/cart.png' %}"></a> -->
+                <!-- <p id="cart-total">{{cartItems}}</p> -->
             </div>
         </div>
 
@@ -114,7 +114,6 @@
     <div class="container">
         <br>
         {% block content %}
-
 
 
         <body>

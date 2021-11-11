@@ -10,7 +10,7 @@ class Table(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
     company = models.ForeignKey(Company, on_delete=models.SET_NULL,null=True, blank=True)
     def __str__(self):
-        return self.name    
+        return str(self.id)
 
 class Product(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
@@ -47,6 +47,7 @@ class Order(models.Model):
     @property
     def get_cart_items(self):
         orderitems = self.orderitem_set.all()
+        print('orderitems:', orderitems)
         total = sum([item.quantity for item in orderitems])
         return total 
 
@@ -58,6 +59,7 @@ class OrderItem(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     @property
     def get_total(self):
+        print('check:', self.product)
         total = self.product.price * self.quantity
         return total 
 

@@ -7,31 +7,25 @@ import datetime
 from django.db.models import Q
 # Create your views here.
 def store(request):
-    company =Company.objects.get(id=1) # '목동점 id
+    company_id, table_id = 1,3
+    company =Company.objects.get(id=company_id) # '목동점 id
     # print("company : ",company)
-    table =Table.objects.get(id=1)
+    table =Table.objects.get(name=table_id, company=company_id)
+    print('table:', table)
     products= Product.objects.filter(company=company)
     order,created= Order.objects.get_or_create(table=table, order_complete=False)
     cartItems = order.get_cart_items
     context={'products':products, 'cartItems':cartItems, 'table':table, 'company':company}
     return render(request, 'store/store.html', context)
 
-# def store(request):
-#     company =Company.objects.get(id=10) # '호텔 id
-#     # print("company : ",company)
-#     table =Table.objects.get(id=1)
-#     products= Product.objects.filter(company=company)
-#     order,created= Order.objects.get_or_create(table=table, order_complete=False)
-#     cartItems = order.get_cart_items
-#     context={'products':products, 'cartItems':cartItems, 'table':table, 'company':company}
-#     return render(request, 'store/store.html', context)
-
-def cart(request, table=2):
+def cart(request, table):
     # company =Company.objects.get(id=1) 
     table =Table.objects.get(id=table)
     order,created= Order.objects.get_or_create(table=table, order_complete=False)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
+    print(order, table)
+    print(order.get_cart_total)
     context={'order':order, "items":items, "table":table, 'cartItems':cartItems}
     return render(request, 'store/cart.html', context)
 

@@ -100,11 +100,11 @@
             
 
             <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'board:index' %}" class="btn btn-warning">문의</a>
-
-                <a href="{% url 'cart_process' table  %}"> {{table}},
-                    <img id="cart-icon" width=30px src="{% static 'images/cart.png' %}"></a>
-                <p id="cart-total">{{cartItems}}</p>
+                <a href="{% url 'store' %}" class="btn btn-warning">주문</a>
+                <a href="{% url 'board:index' %}" class="btn btn-warning">게시판</a>
+                <a href="#"> {{table}},
+                    <!-- <img id="cart-icon" width=30px src="{% static 'images/cart.png' %}"></a> -->
+                <!-- <p id="cart-total">{{cartItems}}</p> -->
             </div>
         </div>
 
@@ -114,6 +114,46 @@
     <div class="container">
         <br>
         {% block content %}
+
+
+
+
+        <body>
+            <div class="content">
+                <form action="{% url 'board:write_board' %}" method="post">
+                {% csrf_token %}
+        
+                <div style="text-align:right;padding: 5px;">
+                    <input type="submit" value="저장">
+                </div>
+        
+                <table class="board_for_read">
+                    <tbody>
+                        <tr>
+                            <td class="td_title" style="text-align:center; width:20%;">제목</td>
+                            <td style="padding:10px;">
+                                <input type="text" name="title" id="title" value="{{ board.title }}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_title" style="text-align:center;">내용</td>
+                            <td style="padding:10px;">
+                                <textarea name="detail" id="detail" rows="10">{{ board.content }}</textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </form>
+        
+                <div style="text-align:left;">
+                    <a href="{% url 'board:index' %}">> 게시판 바로가기</a>
+                    <!-- <a href="{% url 'board:index' %}">> Home</a> -->
+
+                </div>
+        
+            </div>
+        </body>
+
         {% endblock content %}
 
     </div>

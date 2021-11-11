@@ -81,7 +81,6 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'store' %}">{{company}}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -90,17 +89,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <!-- <a class="nav-link" href="{% url 'store' %}">카페<span class="sr-only">(current)</span></a> -->
                 </li>
                 <li class="nav-item active">
-                    <!-- <a class="nav-link" href="{% url 'store' %}">호텔<span class="sr-only">(current)</span></a> -->
                 </li>
  
             </ul>
             
 
             <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'store' %}" class="btn btn-warning">주문</a>
                 <a href="{% url 'board:index' %}" class="btn btn-warning">게시판</a>
                 <a href="#"> {{table}},
                     <!-- <img id="cart-icon" width=30px src="{% static 'images/cart.png' %}"></a> -->

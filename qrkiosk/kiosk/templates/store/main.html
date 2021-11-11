@@ -101,9 +101,9 @@
             
 
             <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'board:index' %}" class="btn btn-warning">문의</a>
+                <a href="#" onclick="window.open('board','게시판','menubar=no, status=no, status=no, toolbar=no, channelmode=yes');" class="btn btn-warning">문의</a>                
 
-                <a href="{% url 'cart_process' table  %}"> {{table}},
+                <a href="{% url 'cart_process' table  %}">
                     <img id="cart-icon" width=30px src="{% static 'images/cart.png' %}"></a>
                 <p id="cart-total">{{cartItems}}</p>
             </div>

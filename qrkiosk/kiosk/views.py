@@ -39,7 +39,7 @@ def cart(request, table):
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
     print(order, table)
-    print(order.get_cart_total)
+   
     context={'order':order, "items":items, "table":table, 'cartItems':cartItems}
     return render(request, 'store/cart.html', context)
 

@@ -123,6 +123,8 @@ a.nav-link {
 
 /* ---------고객게시판 css--------- */
 
+
+
 thead {
 	background-color:#cecece;
 }
@@ -139,7 +141,8 @@ thead {
 }
 
 .board {
-	width: 100%
+	width: 100%;
+	margin-bottom: 50px;
 }
 
 .even_bgcolor {
@@ -168,6 +171,8 @@ a {
 	margin-bottom: 200px;
 	
 }
+
+
 
 td {
     display: table-cell;

@@ -74,7 +74,14 @@ a.nav-link {
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
 	margin-top: 10px;
+	margin-bottom: 50px;
 }
+
+.col-lg-4{
+	margin-top: 10px;
+	margin-bottom: 50px;
+}
+
 
 .row-image{
 	width: 100px;
@@ -200,7 +207,7 @@ div {
 	margin: 4px;
 	padding: 3px 10px;
 	font-size: 25pt;
-	
+
 }
 
 .board_for_read {

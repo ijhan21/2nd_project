@@ -1,0 +1,11 @@
+{% load static %}
+{% block content %}
+<div class="row">
+    {{order_data}}
+    {% for data in order_data %}        
+        
+        {{order_data.{data}}}
+    
+    {% endfor %}
+
+    {% endblock content %}

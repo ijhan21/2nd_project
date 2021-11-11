@@ -81,7 +81,8 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'store' %}">{{company}}</a>
+        <a class="navbar-brand" href="{% url 'store' table %}">{{company}}</a>
+        <h1 class="navbar-brand">{{table.name}}번 테이블</h1>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -90,10 +91,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <!-- <a class="nav-link" href="{% url 'store' %}">카페<span class="sr-only">(current)</span></a> -->
+                    
                 </li>
                 <li class="nav-item active">
-                    <!-- <a class="nav-link" href="{% url 'store' %}">호텔<span class="sr-only">(current)</span></a> -->
+                    
                 </li>
                 <!-- <li class="nav-item active">
                     

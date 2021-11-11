@@ -6,8 +6,21 @@ import json
 import datetime
 from django.db.models import Q
 # Create your views here.
-def store(request):
-    company_id, table_id = 1,3
+
+#http://localhost:8000/?company=1&&table=2
+def store(request, table):
+    table =Table.objects.get(id=table)
+    company = table.company
+    products= Product.objects.filter(company=company)
+    order,created= Order.objects.get_or_create(table=table, order_complete=False)
+    cartItems = order.get_cart_items
+    context={'products':products, 'cartItems':cartItems, 'table':table, 'company':company}
+    return render(request, 'store/store.html', context)
+
+def search(request):
+    company_id=request.GET.get('company')
+    table_id=request.GET.get('table')
+    # company_id, table_id = 1,3
     company =Company.objects.get(id=company_id) # '목동점 id
     # print("company : ",company)
     table =Table.objects.get(name=table_id, company=company_id)
@@ -75,9 +88,33 @@ def orderComplete(request, table):
         order.order_complete=True
         order.save()
         print("orders:",ord)
-    return HttpResponseRedirect('/')
+    context={}
+    return render(request, 'store/thanks.html', context)
+
+###############################################################################################
+########## 주인장 view#########################################################################
+###############################################################################################
+## http://localhost:8000/manage/?company=1
+def manage(request):
+    company_id=request.GET.get('company')        
+    company =Company.objects.get(id=company_id) # '목동점 id
+    tables = company.table_set.all()
+    order_data = dict()
+    for table in tables:
+        order_data[table.name]=[]
+        orders = table.order_set.filter(serve_complete=False)    
+        for order in orders:
+            items = order.orderitem_set.all()
+            for item in items:
+                order_data[table.name].append(item)            
+
+    context={'order_data':order_data}
+    return render(request, 'store/manage.html', context)
+    return
 
 
+
+###############################################################################################
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from board_app.models import Board

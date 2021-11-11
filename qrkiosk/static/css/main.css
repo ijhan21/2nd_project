@@ -173,7 +173,6 @@ a {
 }
 
 
-
 td {
     display: table-cell;
     vertical-align: inherit;
@@ -200,6 +199,8 @@ div {
 	display: block;
 	margin: 4px;
 	padding: 3px 10px;
+	font-size: 25pt;
+	
 }
 
 .board_for_read {

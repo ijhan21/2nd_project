@@ -81,7 +81,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'store' %}">{{company}}</a>
+        <a class="navbar-brand" href="{% url 'board:index' %}">{{company}}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -100,7 +100,8 @@
             
 
             <div class="form-inline my-2 my-lg-0">
-                <a href="{% url 'store' %}" class="btn btn-warning">Home</a>
+                <a href="{% url 'store' %}" class="btn btn-warning">주문</a>
+                <a href="{% url 'board:index' %}" class="btn btn-warning">게시판</a>
 
                 <a href="#"> {{table}},
                     <!-- <img id="cart-icon" width=30px src="{% static 'images/cart.png' %}"></a> -->
@@ -145,7 +146,7 @@
                 </table>
                 <div style="text-align:left;">
                     <!-- <a href="{% url 'board:index' %}">> Home</a> -->
-                    <a href="{% url 'board:index' %}">> Home</a>
+                    <a href="{% url 'board:index' %}">> 고객게시판 바로가기</a>
 
                 </div>
         
@@ -154,13 +155,13 @@
                 <table class="board_for_read">
                     <tbody>
                         <tr>
-                            <td colspan="2" class="td_title" style="text-align:left; padding-left:10px; height:30px;">leave a comment</td>
+                            <td colspan="2" class="td_title" style="text-align:left; padding-left:10px; height:30px;">댓글을 남겨주세요</td>
                         </tr>
                         <tr>
                             <td style="text-align:center;">
                                 <input type="text" name="comment" id="comment" style="width:100%">
                             </td>
-                            <td><input type="submit" value="save"></td>
+                            <td><input type="submit" value="저장"></td>
                         </tr>
                     </tbody>
                 </table>

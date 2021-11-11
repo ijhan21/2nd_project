@@ -11,13 +11,23 @@ h1,h2,h3,h4,h5,h6{
 	background-color: #fff;
 	border-radius: 4px;
 	padding: 10px;
-	font-size:70pt;
+	font-size:25pt;
+	text-align: center;
 }
 
 .box-element strong{
 	font-size:25pt;
+	text-align: center;
 }
 
+.btn{
+	border-radius: 0;
+	font-size: 25pt;
+	text-align: center;
+	margin-inline: 10px;
+	
+
+}
 
 a.navbar-brand {
     font-size: 30pt;
@@ -36,10 +46,6 @@ a.nav-link {
     box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
 	font-size:50pt;
 }
-
-/* div.col-lg-4 {
-	font-size: 60pt;
-} */
 
 .product{
 	border-radius: 0 0 4px 4px;
@@ -68,11 +74,6 @@ a.nav-link {
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
 	margin-top: 10px;
-}
-
-.btn{
-	border-radius: 0;
-	font-size: 18pt;
 }
 
 .row-image{

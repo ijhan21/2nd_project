@@ -100,41 +100,50 @@ def manage(request):
     company_id=request.GET.get('company')        
     company =Company.objects.get(id=company_id) # '목동점 id
     tables = company.table_set.all()
-    order_data = dict()
+    datas = dict()
     for table in tables:
-        order_data[table.name]=[]
-        orders = table.order_set.filter(serve_complete=False)    
+        datas[table.name]=[]
+        orders = table.order_set.filter(serve_complete=False, order_complete=True)   
+        print("table:", table) 
         for order in orders:
+            print(order.order_complete)
             items = order.orderitem_set.all()
+            print("items:",items)
+
             for item in items:
-                order_data[table.name].append(item)            
+                datas[table.name].append(item)
+    # 내용이 없으면 빼기
+    order_data=dict()
+    for key, value in datas.items():        
+        if value:
+           order_data[key]=value
+    print(order_data)
 
     context={'order_data':order_data}
     return render(request, 'store/manage.html', context)
     return
 
+def update_serve(request):
+    print("hello")
+    data = json.loads(request.body)
+    item = data['item']
+    action = data['action']
+    print('item~~:', item)
+    # print('ProductId:', productId)
+    # print("data",data)
+    # print("table",table, type(table))
 
+    # product = Product.objects.get(id=productId)
+    # order, created = Order.objects.get_or_create(table=table, order_complete=False)
+    # orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
-###############################################################################################
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+    # if action == 'add':
+    #     orderItem.quantity = (orderItem.quantity+1)
+    # elif action == 'remove':
+    #     orderItem.quantity = (orderItem.quantity-1)
+    # orderItem.save()
 
-def boardDo(request):
-        print("********************************************")
-        boards = {'boards': Board.objects.all()}
-        print("******---------------------------------**")
-        return render(request, 'store/list.html', boards)
+    # if orderItem.quantity <=0:
+    #     orderItem.delete()
 
-
-def postDo(request):
-    if request.method == "POST":
-        author = request.POST['author']
-        title = request.POST['title']
-        content = request.POST['content']
-        board = Board(author=author, title=title, content=content)
-        board.save()
-        return HttpResponseRedirect(reverse('index'))
-
-    else:
-        return render(request, 'store/post.html')
+    return JsonResponse('Item was Fully added', safe=False)

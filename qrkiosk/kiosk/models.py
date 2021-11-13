@@ -32,9 +32,10 @@ class Product(models.Model):
 class Order(models.Model):
     table = models.ForeignKey(Table, on_delete=models.SET_NULL,null=True, blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
-    order_complete = models.BooleanField(default=False)
-    serve_complete = models.BooleanField(default=False)
+    order_complete = models.BooleanField(default=False)    
     transaction_id = models.CharField(max_length=100, null=True)
+    serve_complete = models.BooleanField(default=False)
+
     def __str__(self):
         return str(self.id)
 

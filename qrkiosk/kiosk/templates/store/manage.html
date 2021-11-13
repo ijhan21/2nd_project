@@ -1,11 +1,88 @@
+<!DOCTYPE html>
 {% load static %}
-{% block content %}
-<div class="row">
-    {{order_data}}
-    {% for data in order_data %}        
-        
-        {{order_data.{data}}}
-    
-    {% endfor %}
+<html lang="kr">
 
-    {% endblock content %}
+<head>
+    <title>QR KIOSK 관리페이지</title>
+    <!-- <meta name="viewport" content="width=device-width,initial-scale=0.5"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=0.4, minimum-scale=0.4" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    </script>
+    
+</head>
+
+<body>
+
+    
+    {% block content %}
+ 
+    {% for key, value in order_data.items %}
+    <div class="row">
+        <div class="col-lg-4">
+            <h1>{{key}}번 테이블</h1>
+            {% for item in value %}
+            <img class="thumbnail" src="{{item.product.imageURL}}" alt="">
+            <div class="box-element product">
+                <h6><strong>{{item.product.name}}</strong></h6>
+            </div>
+            {% endfor %}
+            <button data-item={{item}} data-action="serve_complete"
+            class=" btn btn-outline-secondary add-btn update-serve">서빙</button>
+            <hr>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+
+    <script>
+        var updateBtns_serve = document.getElementsByClassName('update-serve')
+        console.log("check", updateBtns_serve.length)
+        for (var i = 0; i < updateBtns_serve.length; i++) {
+            console.log('hihi')
+            updateBtns_serve[i].addEventListener('click', function () {
+                var item = this.dataset.item
+                var action = this.dataset.action
+                console.log('item:', item, 'action:', action)
+                console.log('dataset:', this.dataset)
+                updateSevedOrder(item, action)
+
+            })
+        }
+
+        function updateSevedOrder(item, action) {
+            var url = '/update_serve/'
+
+            console.log('table:', item)
+            fetch(url, {
+                method: 'POST', headers: {
+                    'Content-Type': 'application/json',                                        
+                },
+                body: JSON.stringify({ 'item': item, 'action': action })
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    location.reload()
+                });
+        }
+    </script>
+{% endblock %}
+</html>

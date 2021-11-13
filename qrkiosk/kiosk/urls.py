@@ -12,6 +12,8 @@ urlpatterns = [
 	
 	path('update_item/', views.updateItem, name='update_item'),
 	path('process_order/', views.processOrder, name='process_order'),
+	path('manage/', views.manage, name='manage'),
+	path('update_serve/', views.update_serve, name='update_serve'),
 	path('<int:table>/order_complete/', views.orderComplete, name='order_complete'),
     
 ]

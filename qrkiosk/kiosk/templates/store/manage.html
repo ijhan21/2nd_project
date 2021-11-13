@@ -1,3 +1,4 @@
+{% extends 'store/company_main.html' %}
 <!DOCTYPE html>
 {% load static %}
 <html lang="kr">
@@ -25,30 +26,39 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
     </script>
-    
+    <script>
+        function refresh_func(){
+            $("#refresh").load("store/manage.html");
+            console.log("refresh")
+        }
+        function div_refresh(){
+            setTimeout('refresh_func()', 3000);
+        }
+        div_refresh()
+    </script>
 </head>
 
 <body>
-
-    
-    {% block content %}
- 
+    {% block content %} 
+    {% if order_data %}
     {% for key, value in order_data.items %}
-    <div class="row">
+    <div id="refresh" class="row">
         <div class="col-lg-4">
             <h1>{{key}}번 테이블</h1>
             {% for item in value %}
-            <img class="thumbnail" src="{{item.product.imageURL}}" alt="">
+            <img  class="thumbnail" src="{{item.product.imageURL}}" alt="" >
             <div class="box-element product">
                 <h6><strong>{{item.product.name}}</strong></h6>
             </div>
             {% endfor %}
-            <button data-item={{item}} data-action="serve_complete"
-            class=" btn btn-outline-secondary add-btn update-serve">서빙</button>
+            <button data-key={{key}} data-action="serve_complete" class=" btn btn-outline-secondary add-btn update-serve">서빙</button>
             <hr>
         </div>
     </div>
     {% endfor %}
+    {% else %}
+    <h1>주문이 없습니다</h1>
+    {% endif %}
 </body>
 
     <script>
@@ -57,24 +67,24 @@
         for (var i = 0; i < updateBtns_serve.length; i++) {
             console.log('hihi')
             updateBtns_serve[i].addEventListener('click', function () {
-                var item = this.dataset.item
+                var key = this.dataset.key
                 var action = this.dataset.action
-                console.log('item:', item, 'action:', action)
+                console.log('key:', key, 'action:', action)
                 console.log('dataset:', this.dataset)
-                updateSevedOrder(item, action)
+                updateSevedOrder(key, action)
 
             })
         }
 
-        function updateSevedOrder(item, action) {
+        function updateSevedOrder(key, action) {
             var url = '/update_serve/'
 
-            console.log('table:', item)
+            console.log('table:', key)
             fetch(url, {
                 method: 'POST', headers: {
                     'Content-Type': 'application/json',                                        
                 },
-                body: JSON.stringify({ 'item': item, 'action': action })
+                body: JSON.stringify({ 'key': key, 'action': action })
             })
                 .then((response) => {
                     return response.json();

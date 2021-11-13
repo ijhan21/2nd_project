@@ -102,7 +102,7 @@ def manage(request):
     tables = company.table_set.all()
     datas = dict()
     for table in tables:
-        datas[table.name]=[]
+        datas[table]=[]
         orders = table.order_set.filter(serve_complete=False, order_complete=True)   
         print("table:", table) 
         for order in orders:
@@ -111,7 +111,7 @@ def manage(request):
             print("items:",items)
 
             for item in items:
-                datas[table.name].append(item)
+                datas[table].append(item)
     # 내용이 없으면 빼기
     order_data=dict()
     for key, value in datas.items():        
@@ -119,16 +119,22 @@ def manage(request):
            order_data[key]=value
     print(order_data)
 
-    context={'order_data':order_data}
+    context={'order_data':order_data, 'company':company}
     return render(request, 'store/manage.html', context)
     return
 
 def update_serve(request):
     print("hello")
     data = json.loads(request.body)
-    item = data['item']
+    print('data',data)
+    table_id = data['key']
     action = data['action']
-    print('item~~:', item)
+    print('table_id~~:', table_id)
+    orders = Order.objects.filter(table=table_id)
+    for order in orders:
+        order.serve_complete = True
+        order.save()
+        print(order.serve_complete)
     # print('ProductId:', productId)
     # print("data",data)
     # print("table",table, type(table))

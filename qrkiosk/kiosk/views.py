@@ -118,7 +118,7 @@ def update_serve(request):
         order.save()
     return JsonResponse('Item was Fully added', safe=False)
 
-def summary(request):        
+def summary(request, table=None):        
     # company = Company.objects.get_or_create(id=5)
     ml_counter=list()
     tables= Table.objects.filter(company=5)

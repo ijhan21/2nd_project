@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('kiosk.urls')),
     path('admin/', admin.site.urls),
     path('board/', include('board.urls')),
+    path('<int:board_id>/board/', include('board.urls')),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

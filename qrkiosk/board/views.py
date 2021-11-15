@@ -13,7 +13,7 @@ def index(request):
 
     return render(request, 'board/index.html', {'title':'고객 게시판', 'board_list':board_list})
 
-def detail(request, board_id):
+def detail(request, board_id=None):
     board = Board.objects.get(id=board_id)
     return render(request, 'board/detail.html', {'board': board})
 

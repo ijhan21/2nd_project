@@ -35,7 +35,7 @@
     {% for key, value in order_data.items %}
     <div id="refresh" class="row">
         <div class="col-lg-4">
-            <h1>{{key}}번 테이블</h1>
+            <h1>{{key.name}}님 테이블</h1>
             {% for item in value %}
             <img  class="thumbnail" src="{{item.product.imageURL}}" alt="" >
             <div class="box-element product">

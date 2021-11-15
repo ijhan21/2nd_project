@@ -11,6 +11,7 @@ urlpatterns = [
 	path('<int:table>/checkout/', views.checkout, name="checkout"),
 	
 	path('update_item/', views.updateItem, name='update_item'),
+	path('manage/summary/', views.summary, name='summary'),
 	path('process_order/', views.processOrder, name='process_order'),
 	path('manage/', views.manage, name='manage'),
 	path('update_serve/', views.update_serve, name='update_serve'),

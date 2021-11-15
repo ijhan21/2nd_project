@@ -5,6 +5,8 @@ from .models import *
 import json
 import datetime
 from django.db.models import Q
+import collections
+from itertools import combinations
 
 # Create your views here.
 
@@ -23,9 +25,7 @@ def search(request):
     table_id=request.GET.get('table')
     # company_id, table_id = 1,3
     company =Company.objects.get(id=company_id) # '목동점 id
-    # print("company : ",company)
     table =Table.objects.get(name=table_id, company=company_id)
-    print('table:', table)
     products= Product.objects.filter(company=company)
     order,created= Order.objects.get_or_create(table=table, order_complete=False)
     cartItems = order.get_cart_items
@@ -38,7 +38,6 @@ def cart(request, table):
     order,created= Order.objects.get_or_create(table=table, order_complete=False)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
-    print(order, table)
    
     context={'order':order, "items":items, "table":table, 'cartItems':cartItems}
     return render(request, 'store/cart.html', context)
@@ -47,7 +46,6 @@ def checkout(request, table):
     order, created = Order.objects.get_or_create(table=table, order_complete=False)
     items = order.orderitem_set.all()
     cartItems = order.get_cart_items
-    print(cartItems)
     context = {'items':items, 'order':order, 'cartItems':cartItems, 'table':table}
     return render(request, 'store/checkout.html', context)
 
@@ -56,12 +54,7 @@ def updateItem(request):
     productId = data['productId']
     action = data['action']
     table = data['table']
-    table =Table.objects.get(id=table)
-    print('Action~~:', action)
-    print('ProductId:', productId)
-    print("data",data)
-    print("table",table, type(table))
-
+    table =Table.objects.get(id=table) 
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(table=table, order_complete=False)
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
@@ -81,14 +74,12 @@ def processOrder(request):
     return JsonResponse('Payment complete', safe=False)
 
 def orderComplete(request, table):
-    # print('table:',table)
     table = Table.objects.get(id=table)
     orders = table.order_set.all()
     
     for order in orders:
         order.order_complete=True
         order.save()
-        print("orders:",ord)
     context={}
     return render(request, 'store/thanks.html', context)
 
@@ -104,12 +95,8 @@ def manage(request):
     for table in tables:
         datas[table]=[]
         orders = table.order_set.filter(serve_complete=False, order_complete=True)   
-        print("table:", table) 
         for order in orders:
-            print(order.order_complete)
             items = order.orderitem_set.all()
-            print("items:",items)
-
             for item in items:
                 datas[table].append(item)
     # 내용이 없으면 빼기
@@ -117,39 +104,35 @@ def manage(request):
     for key, value in datas.items():        
         if value:
            order_data[key]=value
-    print(order_data)
 
     context={'order_data':order_data, 'company':company}
     return render(request, 'store/manage.html', context)
-    return
 
 def update_serve(request):
-    print("hello")
     data = json.loads(request.body)
-    print('data',data)
     table_id = data['key']
     action = data['action']
-    print('table_id~~:', table_id)
     orders = Order.objects.filter(table=table_id)
     for order in orders:
         order.serve_complete = True
         order.save()
-        print(order.serve_complete)
-    # print('ProductId:', productId)
-    # print("data",data)
-    # print("table",table, type(table))
-
-    # product = Product.objects.get(id=productId)
-    # order, created = Order.objects.get_or_create(table=table, order_complete=False)
-    # orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-
-    # if action == 'add':
-    #     orderItem.quantity = (orderItem.quantity+1)
-    # elif action == 'remove':
-    #     orderItem.quantity = (orderItem.quantity-1)
-    # orderItem.save()
-
-    # if orderItem.quantity <=0:
-    #     orderItem.delete()
-
     return JsonResponse('Item was Fully added', safe=False)
+
+def summary(request):        
+    # company = Company.objects.get_or_create(id=5)
+    ml_counter=list()
+    tables= Table.objects.filter(company=5)
+    for table in tables:
+        orders= Order.objects.filter(table=table, serve_complete=True)
+        for order in orders:
+            temp_combination=list()
+            orderItems = OrderItem.objects.filter(order=order)
+            for orderItem in orderItems:
+                temp_combination.append(orderItem.product)
+            if len(temp_combination)>1:
+                ml_counter+=list(combinations(temp_combination,2))
+    ml = collections.Counter(ml_counter)
+    suggest_datas = ml.most_common(3)
+    suggest_items = [dt[0] for dt in suggest_datas]
+    context={'suggest_items':suggest_items}
+    return render(request, 'store/summary.html', context)
